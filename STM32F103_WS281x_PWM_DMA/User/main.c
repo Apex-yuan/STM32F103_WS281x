@@ -39,9 +39,14 @@ int main(void)
   /* Infinite loop */
   while (1)
   {
-    ws281x_colorWipe(ws281x_color(0x00, 0x00, 0xff), 250); 
-    ws281x_closeAll();  
-    delay_ms(1000);  
+    //ws281x_colorWipe(ws281x_color(0x00, 0x00, 0xff), 250); 
+    //ws281x_closeAll();  
+//    ws281x_setPixelColor(0,0xff0000);
+//    ws281x_show();
+    //delay_us(10);
+    ws281x_theaterChase(0xaa0000,200);
+    delay_ms(1000);
+      
   }
 }
 
