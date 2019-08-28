@@ -570,6 +570,11 @@
               <FileType>1</FileType>
               <FilePath>..\User\main.c</FilePath>
             </File>
+            <File>
+              <FileName>rgb_hsv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\rgb_hsv.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

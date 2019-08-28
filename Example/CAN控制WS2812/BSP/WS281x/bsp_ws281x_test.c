@@ -67,6 +67,9 @@ void ws281x_init(void)
   TIM_OC2Init(WS281x_TIMx, &TIM_OCInitStruct);
   
   TIM_CtrlPWMOutputs(WS281x_TIMx, ENABLE);	//PWM输出使能	
+  
+  TIM_OC1PreloadConfig(WS281x_TIMx, TIM_OCPreload_Enable);   //CH1预装载器使能
+  TIM_OC2PreloadConfig(WS281x_TIMx, TIM_OCPreload_Enable);   //CH2预装载器使能
 
   TIM_Cmd(WS281x_TIMx, DISABLE);
   TIM_DMACmd(WS281x_TIMx, EYE_TIM_DMA_SOURCE, ENABLE);
@@ -118,11 +121,11 @@ void ws281x_show(uint8_t name)
     case EYE:
       DMA_SetCurrDataCounter(EYE_DMAx_CHANNELx, (uint16_t)((EYE_PIXEL_NUM) * GRB)); 
       DMA_Cmd(EYE_DMAx_CHANNELx, ENABLE);
-      TIM_OC1PreloadConfig(WS281x_TIMx, TIM_OCPreload_Enable);   //CH1预装载器使能
+      //TIM_OC1PreloadConfig(WS281x_TIMx, TIM_OCPreload_Enable);   //CH1预装载器使能
       TIM_Cmd(WS281x_TIMx, ENABLE);
       while(DMA_GetFlagStatus(EYE_DMA_FLAG) != SET);    //等待传输完成
       DMA_Cmd(EYE_DMAx_CHANNELx, DISABLE);
-      TIM_OC1PreloadConfig(WS281x_TIMx, TIM_OCPreload_Disable); //关闭CH1预装载器
+      //TIM_OC1PreloadConfig(WS281x_TIMx, TIM_OCPreload_Disable); //关闭CH1预装载器
       TIM_Cmd(WS281x_TIMx, DISABLE);
       TIM_SetCompare1(WS281x_TIMx, 0);  //在使用多路通道时清空占空比非常重要，不清会导致在其他位置打开定时器时，该通道会以上次占空比输出。
       DMA_ClearFlag(EYE_DMA_FLAG);
@@ -130,11 +133,11 @@ void ws281x_show(uint8_t name)
     case EAR:
       DMA_SetCurrDataCounter(EAR_DMAx_CHANNELx, (uint16_t)((EAR_PIXEL_NUM) * GRB)); 
       DMA_Cmd(EAR_DMAx_CHANNELx, ENABLE);
-      TIM_OC2PreloadConfig(WS281x_TIMx, TIM_OCPreload_Enable);   //CH2预装载器使能
+      //TIM_OC2PreloadConfig(WS281x_TIMx, TIM_OCPreload_Enable);   //CH2预装载器使能
       TIM_Cmd(WS281x_TIMx, ENABLE);
       while(DMA_GetFlagStatus(EAR_DMA_FLAG) != SET);    //等待传输完成
       DMA_Cmd(EAR_DMAx_CHANNELx, DISABLE);
-      TIM_OC2PreloadConfig(WS281x_TIMx, TIM_OCPreload_Disable); //关闭CH2预装载器
+      //TIM_OC2PreloadConfig(WS281x_TIMx, TIM_OCPreload_Disable); //关闭CH2预装载器
       TIM_Cmd(WS281x_TIMx, DISABLE);
       TIM_SetCompare2(WS281x_TIMx, 0); //在使用多路通道时清空占空比非常重要，不清会导致在其他位置打开定时器时，该通道会以上次占空比输出。
       DMA_ClearFlag(EAR_DMA_FLAG);
